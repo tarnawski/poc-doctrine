@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  php:
+    build: ./docker/php
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - mysql
+  nginx:
+    image: nginx:stable
+    ports:
+      - 80:80
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+  mysql:
+    image: mysql:8.0
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: store
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: secret
+    volumes:
+      - ./docker/mysql:/docker-entrypoint-initdb.d

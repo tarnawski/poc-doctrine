@@ -1,0 +1,33 @@
+<doctrine-mapping
+        xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Entity\Product" table="product">
+        <id name="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+        <field name="name" type="string" length="36"/>
+        <field name="description" type="string" length="255"/>
+
+        <!-- If the association is marked as EAGER, it will fetch and load the associated entity as well. -->
+<!--        <many-to-one field="category" target-entity="Category" inversed-by="products" fetch="EAGER">-->
+<!--            <join-column name="category_id" referenced-column-name="id"/>-->
+<!--        </many-to-one>-->
+
+        <!-- If the association is marked as LAZY, doctrine will create proxy objects in place of the actual entity. -->
+        <!-- During first call to that associated entity, doctrine will fetch and load that object(s) from database. -->
+        <!-- Associations are marked as LAZY by default. -->
+        <many-to-one field="category" target-entity="Category" inversed-by="products" fetch="LAZY">
+            <join-column name="category_id" referenced-column-name="id"/>
+        </many-to-one>
+
+        <!-- If the association is marked as EXTRA LAZY the methods based on collections can be called without triggering a full load of the collection -->
+        <!-- Ex. contains(), containsKey(), count(), get(), slice() -->
+<!--        <many-to-one field="category" target-entity="Category" inversed-by="products" fetch="EXTRA_LAZY">-->
+<!--            <join-column name="category_id" referenced-column-name="id"/>-->
+<!--        </many-to-one>-->
+
+    </entity>
+</doctrine-mapping>
