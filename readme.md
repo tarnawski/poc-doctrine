@@ -1,5 +1,4 @@
 # POC RESULTS
-=============
 
 ### Database schema
 ![Database](database.png "Database")
@@ -19,8 +18,10 @@ Example methods: contains(), containsKey(), count(), get(), slice().
 ## Fetch associated object
 
 ### EAGER
+```php
 $productRepository = $entityManager->getRepository(Product::class);
 $product = $productRepository->find(1);
+```
 
 ```sql
 SELECT
@@ -35,8 +36,10 @@ LEFT JOIN category t5 ON t0.category_id = t5.id WHERE t0.id = ?
 ```
 
 ### LAZY
+```php
 $productRepository = $entityManager->getRepository(Product::class);
 $product = $productRepository->find(1);
+```
 
 ```sql
 SELECT
@@ -50,9 +53,11 @@ FROM product t0 WHERE t0.id = ?
 ## Fetch associated collection
 
 ### EAGER
+```php
 $categoryRepository = $entityManager->getRepository(Category::class);
 $category = $categoryRepository->find(1);
 $product = $category->getProducts()->count();
+```
 
 ```sql
 SELECT
@@ -66,9 +71,11 @@ FROM category t0 LEFT JOIN product t3 ON t3.category_id = t0.id WHERE t0.id = ?
 ```
 
 ### LAZY
+```php
 $categoryRepository = $entityManager->getRepository(Category::class);
 $category = $categoryRepository->find(1);
 $product = $category->getProducts()->count();
+```
 
 ```sql
 SELECT t0.name AS name_1, t0.id AS id_2 FROM category t0 WHERE t0.id = ?
@@ -85,9 +92,11 @@ FROM product t0 LEFT JOIN category t5 ON t0.category_id = t5.id WHERE t0.categor
 ```
 
 ### EXTRA_LAZY
+```php
 $categoryRepository = $entityManager->getRepository(Category::class);
 $category = $categoryRepository->find(1);
 $product = $category->getProducts()->count();
+```
 
 ```sql
 SELECT t0.name AS name_1, t0.id AS id_2 FROM category t0 WHERE t0.id = ?
