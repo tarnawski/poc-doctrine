@@ -8,6 +8,9 @@
             <generator strategy="AUTO"/>
         </id>
         <field name="name" type="string" length="255"/>
-        <one-to-many field="products" target-entity="Product" mapped-by="category" />
+
+        <one-to-many field="products" target-entity="Product" mapped-by="category" fetch="EAGER"/>
+<!--        <one-to-many field="products" target-entity="Product" mapped-by="category" fetch="LAZY"/>-->
+<!--        <one-to-many field="products" target-entity="Product" mapped-by="category" fetch="EXTRA_LAZY"/>-->
     </entity>
 </doctrine-mapping>
